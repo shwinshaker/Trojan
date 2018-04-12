@@ -1,0 +1,135 @@
+clear;
+
+ffname='symba_intro_fictiousTrojans_fast';
+% fname={'NoPlutino_1Gyr','Pluto_10Mass_1Gyr','Pluto_100Mass_1Gyr', ...,
+%     'Multi-1+9Plutino_100M_1Gyr', 'Multi-1+9Plutino_10M_1Gyr'};
+
+fname={'NoPlutino_1Gyr','Pluto_1Gyr','Multi-1+9Plutino_10M_1Gyr',...,
+    'Pluto_100Mass_1Gyr','Multi-1+99Plutino_100M_1Gyr'};
+
+for i=1:length(fname)
+    meanEle=load(['~/Documents/ServerMount/LAB/CE_realp/',ffname,'/',fname{i},'/mean.txt']);
+    eval(['meanEle',int2str(i),'=meanEle;']);
+end
+
+figure;
+set(gcf,'Position',[400,100,800,800],'color','w');
+fontsize=15;
+colorspec={'k','b','c','r','m'};
+hhead=0.2;
+vhead=0.1;
+hwidth=0.25;
+vwidth=0.25;
+gapWidth=0.05;
+topSubHeight=0.05;
+rightSubWidth=0.05;
+
+
+Nbins=20;
+Ntp=1; % Use pure counts
+
+%% e-inc
+% axes('position',[hhead,vhead,hwidth,vwidth]);
+% axis square;
+% for i=1:length(fname)
+%     eval(['meanEle=meanEle',int2str(i),';']);
+%     plot(meanEle(:,5),meanEle(:,6),[colorspec{i},'.']);hold on;
+% end
+% xlim=get(gca,'xlim');
+% ylim=get(gca,'ylim');
+% xlabel('$e$','fontsize',fontsize,'Interpreter','latex');
+% ylabel('$inc~\mathrm{(DEG)}$','fontsize',fontsize,'Interpreter','latex');
+% 
+% axes('position',[hhead,vhead+vwidth,hwidth,topSubHeight]);
+% % [f,xi]=ksdensity(meanEle1(:,5),linspace(0,1,10),'support',[0,1],'bandwidth',1);
+% % plot(xi,f,'k-');
+% for i=1:length(fname)
+%     eval(['meanEle=meanEle',int2str(i),';']);
+%     [N,edges]=histcounts(meanEle(:,5),linspace(xlim(1),xlim(2),Nbins),'Normalization','probability');
+%     plot((edges(1:end-1)+edges(2:end))/2,N,[colorspec{i},'.-']);hold on;
+% end
+% set(gca,'xtick',[]);set(gca,'ytick',[]);
+% % set(gca,'ydir','reverse');
+% % box off; axis off;
+% 
+% axes('position',[hhead+hwidth,vhead,rightSubWidth,vwidth]);
+% for i=1:length(fname)
+%     eval(['meanEle=meanEle',int2str(i),';']);
+%     [N,edges]=histcounts(meanEle(:,6),linspace(ylim(1),ylim(2),Nbins),'Normalization','probability');
+%     plot(N,(edges(1:end-1)+edges(2:end))/2,[colorspec{i},'.-']);hold on;
+% end
+% set(gca,'xtick',[]);set(gca,'ytick',[]);
+
+% set(gca,'ydir','reverse');
+% hold off;
+
+%% a-inc
+axes('position',[hhead,vhead,hwidth,vwidth]);
+for i=1:length(fname)
+    eval(['meanEle=meanEle',int2str(i),';']);
+    plot(meanEle(:,4),meanEle(:,6),[colorspec{i},'.']);hold on;
+end
+xlim=get(gca,'xlim');
+ylim=get(gca,'ylim');
+xlabel('$a~\mathrm{(AU)}$','fontsize',fontsize,'Interpreter','latex');
+ylabel('$inc~\mathrm{(DEG)}$','fontsize',fontsize,'Interpreter','latex');
+
+axes('position',[hhead,vhead+vwidth,hwidth,topSubHeight]);
+% [f,xi]=ksdensity(meanEle1(:,5),linspace(0,1,10),'support',[0,1],'bandwidth',1);
+% plot(xi,f,'k-');
+for i=1:length(fname)
+    eval(['meanEle=meanEle',int2str(i),';']);
+    [N,edges]=histcounts(meanEle(:,4),linspace(xlim(1),xlim(2),Nbins),'Normalization','probability');
+    plot((edges(1:end-1)+edges(2:end))/2,N/Ntp,[colorspec{i},'.-']);hold on;
+end
+set(gca,'xtick',[]);set(gca,'ytick',[]);
+% set(gca,'ydir','reverse');
+% box off; axis off;
+
+axes('position',[hhead+hwidth,vhead,rightSubWidth,vwidth]);
+for i=1:length(fname)
+    eval(['meanEle=meanEle',int2str(i),';']);
+    [N,edges]=histcounts(meanEle(:,6),linspace(ylim(1),ylim(2),Nbins),'Normalization','probability');
+    plot(N/Ntp,(edges(1:end-1)+edges(2:end))/2,[colorspec{i},'.-']);hold on;
+end
+set(gca,'xtick',[]);set(gca,'ytick',[]);
+% set(gca,'ydir','reverse');
+% hold off;
+
+%% a-e
+axes('position',[hhead+hwidth+rightSubWidth+gapWidth,vhead,hwidth,vwidth]);
+axis square;
+for i=1:length(fname)
+    eval(['meanEle=meanEle',int2str(i),';']);
+    h=plot(meanEle(:,4),meanEle(:,5),[colorspec{i},'.']);hold on;
+    eval(['h',int2str(i),'=h;']);
+end
+ylim=get(gca,'ylim');
+xlim=get(gca,'xlim');
+xlabel('$a~\mathrm{(AU)}$','fontsize',fontsize,'Interpreter','latex');
+ylabel('$e$','fontsize',fontsize,'Interpreter','latex');
+legend([h1 h2 h3 h4],{'$S+N$','$S+N+P$','$S+N+10P(1)$','$S+N+P(100)$'}, ...,
+        'fontsize',12,'location','southeast','box','on','Interpreter','latex');
+
+axes('position',[hhead+hwidth+rightSubWidth+gapWidth,vhead+vwidth,hwidth,topSubHeight]);
+% [f,xi]=ksdensity(meanEle1(:,5),linspace(0,1,10),'support',[0,1],'bandwidth',1);
+% plot(xi,f,'k-');
+for i=1:length(fname)
+    eval(['meanEle=meanEle',int2str(i),';']);
+    [N,edges]=histcounts(meanEle(:,4),linspace(xlim(1),xlim(2),Nbins),'Normalization','probability');
+    plot((edges(1:end-1)+edges(2:end))/2,N/Ntp,[colorspec{i},'.-']);hold on;
+end
+set(gca,'xtick',[]);set(gca,'ytick',[]);
+% set(gca,'ydir','reverse');
+% box off; axis off;
+
+axes('position',[hhead+hwidth+hwidth+rightSubWidth+gapWidth,vhead,rightSubWidth,vwidth]);
+for i=1:length(fname)
+    eval(['meanEle=meanEle',int2str(i),';']);
+    [N,edges]=histcounts(meanEle(:,5),linspace(ylim(1),ylim(2),Nbins),'Normalization','probability');
+    plot(N/Ntp,(edges(1:end-1)+edges(2:end))/2,[colorspec{i},'.-']);hold on;
+end
+set(gca,'xtick',[]);set(gca,'ytick',[]);
+
+
+saveas(gcf,'../test.pdf','pdf');
