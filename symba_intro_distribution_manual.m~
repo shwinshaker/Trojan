@@ -41,8 +41,7 @@ for i=1:length(fname)
     h=plot(meanEle(:,5),meanEle(:,6),'color',colorspec{i},...,
                                      'marker',marker{i},...,
                                      'linestyle','none',....,
-                                     'markersize',markersize{i});
-    hold on;
+                                     'markersize',markersize{i});hold on;
     eval(['h',int2str(i),'=h;']);
 end
 xlim=get(gca,'xlim');
@@ -62,7 +61,7 @@ for i=1:length(fname)
     plot((edges(1:end-1)+edges(2:end))/2,N,'color',colorspec{i},...,
                                            'marker',marker{i},...,
                                            'markersize',markersize{i});
-    hold on;
+         hold on;
 end
 set(gca,'xtick',[]);set(gca,'ytick',[]);
 % set(gca,'ydir','reverse');
@@ -74,8 +73,7 @@ for i=1:length(fname)
     [N,edges]=histcounts(meanEle(:,6),linspace(ylim(1),ylim(2),Nbins),'Normalization','probability');
     plot(N,(edges(1:end-1)+edges(2:end))/2,'color',colorspec{i},...,
                                            'marker',marker{i},...,
-                                           'markersize',markersize{i});
-    hold on;
+                                           'markersize',markersize{i});hold on;
 end
 set(gca,'xtick',[]);set(gca,'ytick',[]);
 

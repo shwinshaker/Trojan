@@ -22,7 +22,8 @@ Rth=gm*aP*(mP/3)^(1/3);
 
 A=(3-aT/aP)/2;
 B=(2-aT/aP)^(1/2);
-dinc0=mP*aT/Rth*(2/(1-eT^2))^(1/2);
+% dinc0=mP*aT/Rth*(2/(1-eT^2))^(1/2);
+dinc0=mP*aT/Rth*(2*(1-eT^2))^(1/2);
 de0=mP*aT/Rth*(2*(1-eT^2))^(1/2);
 da0=aT*mP*aT/Rth*2*(2/(1-eT^2))^(1/2);
 
@@ -36,11 +37,15 @@ y=a+rand(N,1)*(b-a);
 gmR=G(y);
 
 %%% resulting di Dstb
-dinc=dinc0*coswf.*sind(theta)./(A-B*cosphivpvt).^(1/2).*(1./gmR.^2-1).^(1/2)/pi*180;
+%%% mainR=(1./gmR.^2-1).^(1/2);
+mainR=1./gmR;
+% dinc=dinc0*coswf.*sind(theta)./(A-B*cosphivpvt).^(1/2).*(1./gmR.^2-1).^(1/2)/pi*180;
+rhoi=coswf./(1+eT.*cosf);
+dinc=dinc0*rhoi.*sind(theta)./(A-B*cosphivpvt).^(1/2).*mainR/pi*180;
 zetae=sinf.*cosd(phi)+cosf.*sind(phi)+cosE.*sind(phi);
-de=de0*zetae.*cosd(theta)./(A-B*cosphivpvt).^(1/2).*(1./gmR.^2-1).^(1/2);
+de=de0*zetae.*cosd(theta)./(A-B*cosphivpvt).^(1/2).*mainR;
 zetaa=eT*(sinf.*cosd(phi)+cosf.*sind(phi))+sind(phi);
-da=da0*zetaa.*cosd(theta)./(A-B*cosphivpvt).^(1/2).*(1./gmR.^2-1).^(1/2);
+da=da0*zetaa.*cosd(theta)./(A-B*cosphivpvt).^(1/2).*mainR;
 
 end
 

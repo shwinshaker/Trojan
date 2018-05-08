@@ -1,4 +1,4 @@
-function [x0,y0,z0] = Fun_CEFormula_ClosestPos(aP,OP,at,et,it,Ot,wt,ft)
+function [x0,y0,z0] = Fun_CEFormula_EnterPos(aP,OP,at,et,it,Ot,wt,ft)
 % Given pre-encounter elements, calculate the elements at the closest
 % position
 % Planet: circular planar

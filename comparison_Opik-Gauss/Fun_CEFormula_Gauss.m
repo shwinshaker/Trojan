@@ -1,4 +1,4 @@
-function [di,de,da,Rr] = Fun_CEFormula_Gauss(aP,OP,mP,at,et,it,Ot,wt,xb,yb,zb,sinPhi,cosPhi)
+function [di,de,da,Rr] = Fun_CEFormula_Gauss(aP,OP,mP,at,et,it,Ot,wt,xb,yb,zb,sinPhi,cosPhi,CEth)
 % Given pre-encounter elements, calculate the element change
 % Planet: circular planar
 % Particle: no limits
@@ -60,11 +60,11 @@ x0=Pr(1);y0=Pr(2);z0=Pr(3);
 %%% On the plane of particle, whose element change is to be calculated
 R0=sqrt(x0.^2+y0.^2+z0.^2)*aP;
 fprintf('R0: %.4f AU\n',R0);
-Rth=3.5*aP.*(mP/3).^(1/3);
+Rth=CEth*aP.*(mP/3).^(1/3);
 fprintf('Rth: %.4f AU\n',Rth);
-if Rth<R0
-    error('R0>Rth: too far!')
-end
+% if Rth<R0
+%     error('R0>Rth: too far!')
+% end
 sinTheta0=z0./sqrt(x0.^2+y0.^2+z0.^2);
 cosTheta0=sqrt(x0.^2+y0.^2)./sqrt(x0.^2+y0.^2+z0.^2);
 sinPhi0=y0./sqrt(x0.^2+y0.^2);
@@ -122,7 +122,8 @@ rt=at.*(1-et.^2)./(1+et.*cosf0);
 di0=-mP*rt./Rth*(2./(1-et.^2)).^(1/2);
 de0=-mP*at./Rth*(2*(1-et.^2)).^(1/2);
 da0=-at*mP*at./Rth*2*(2./(1-et.^2)).^(1/2);
-mainR=(1./(R0./Rth).^2-1).^(1/2);
+% mainR=(1./(R0./Rth).^2-1).^(1/2);
+mainR=1./(R0./Rth);
 
 disp('-------------------------');
 %% calc

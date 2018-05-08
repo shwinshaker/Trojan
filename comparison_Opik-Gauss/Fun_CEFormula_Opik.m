@@ -1,4 +1,4 @@
-function [di,de,da,xb,yb,zb,sinPhi,cosPhi,x0,y0,z0,Ux,Uy,Uz] = Fun_CEFormula_Opik(aP,OP,mP,at,et,it,Ot,wt,ft)
+function [di,de,da,xb,yb,zb,sinPhi,cosPhi,x0,y0,z0,Ux,Uy,Uz] = Fun_CEFormula_Opik(aP,OP,mP,at,et,it,Ot,wt,ft,CEth)
 % Given pre-encounter elements, calculate the post-encounter elements
 % Planet: circular planar
 % Particle: no limits
@@ -26,7 +26,7 @@ fprintf('Pre-Ot: %.4f DEG \n',Ot);
 fprintf('Pre-wt: %.4f DEG\n',wt);
 fprintf('Pre-ft: %.4f DEG\n',ft);
 disp('-------------------------');
-dth=3.5*(mP/3).^(1/3);
+dth=CEth*(mP/3).^(1/3);
 fprintf('Rth/aP: %.4f\n', dth);
 
 %% 
@@ -107,10 +107,10 @@ fprintf('Pre-CE position: (%.6f,%.6f,%.6f)\n', xb,yb,zb);
 % minimum distance on asymptote
 db=sqrt(xb.^2+yb.^2+zb.^2);
 fprintf('Pre-minimum distance (asymptotic): %.4f\n', db);
-if db>dth
-    fprintf('R0/Rth: %.4f\n', db/dth);
-    error('R0>Rth: too far!')
-end
+% if db>dth
+%     fprintf('R0/Rth: %.4f\n', db/dth);
+%     error('R0>Rth: too far!')
+% end
 
 xi=xb.*cosPhi-zb.*sinPhi;
 zeta=(xb.*sinPhi+zb.*cosPhi).*cosTheta-yb.*sinTheta;

@@ -183,7 +183,7 @@ yylim=0.2;
 dxxlim=30;
 fontsize=15;
 
-varname='phip';%'thetap','phip','phivpvt','thetav','lambda'
+varname='theta';%'thetap','phip','phivpvt','thetav','lambda'
 
 %% lambda ???????????0?180????
 switch varname
@@ -214,7 +214,7 @@ switch varname
         yylim=0.02;
         xxlim1=0;xxlim2=360;
     case 'f'
-        label='f';
+        label='f_T';
         yylim=0.02;
         xxlim1=-180;xxlim2=180;
     case 'ki'
@@ -255,13 +255,13 @@ for isub=1:4
 %     fprintf('Kuiper test result: %.4f', k);
 %     fprintf('Kuiper test result: %.4f', K);
 
-    %% circ mean and confidence
-%     [cmean,cul,cll]=circ_mean(circ_ang2rad(var_dat));
-%     cmean=circ_rad2ang(cmean);
-%     cul=circ_rad2ang(cul);
-%     cll=circ_rad2ang(cll);
-%     conf=circ_confmean(circ_ang2rad(var_dat));
-%     conf=circ_rad2ang(conf);
+    % circ mean and confidence
+    [cmean,cul,cll]=circ_mean(circ_ang2rad(var_dat));
+    cmean=circ_rad2ang(cmean);
+    cul=circ_rad2ang(cul);
+    cll=circ_rad2ang(cll);
+    conf=circ_confmean(circ_ang2rad(var_dat));
+    conf=circ_rad2ang(conf);
     
 %     plot([cll cll],[0 yylim],'k--');
 %     plot([cul cul],[0 yylim],'k--');
@@ -269,14 +269,14 @@ for isub=1:4
     %% circ skewness
     skew=circ_skewness(circ_ang2rad(var_dat));
     
-%     set(text(xxlim1+0.05*(xxlim2-xxlim1),8/9*yylim,['$$\overline{\theta_0}=\left(',sprintf('%.4f',cmean),'\pm',sprintf('%.4f',conf),'\right)^\circ$$']),'Interpreter','latex','fontsize',fontsize/5*4,'color','red');
-%     set(text(xxlim1+0.05*(xxlim2-xxlim1),7/9*yylim,['$$Skew= ',sprintf('%.4f',skew),'$$']),'Interpreter','latex','fontsize',fontsize/5*4,'color','red');
-%     
+    set(text(xxlim1+0.05*(xxlim2-xxlim1),8/9*yylim,['$$\overline{\theta_0}=\left(',sprintf('%.4f',cmean),'\pm',sprintf('%.4f',conf),'\right)^\circ$$']),'Interpreter','latex','fontsize',fontsize/5*4,'color','red');
+    set(text(xxlim1+0.05*(xxlim2-xxlim1),7/9*yylim,['$$Skew= ',sprintf('%.4f',skew),'$$']),'Interpreter','latex','fontsize',fontsize/5*4,'color','red');
+    
 %     h2=plot([xxlim1 xxlim2],[1/360 1/360],'r-','linewidth',1.3);
 
 %     plot([90 90],[0 yylim],'k--');
 %     plot([270 270],[0 yylim],'k--');
-%     plot([0 0],[0 yylim],'k--');
+    plot([0 0],[0 yylim],'k--');
 %     plot([180 180],[0 yylim],'k--');
     
     xlim([xxlim1 xxlim2]);

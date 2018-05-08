@@ -204,31 +204,12 @@ Width=0.6;
 dName={'di','de'}; %,'da'};
 ylabelList={'$\Delta i~\mathrm{(DEG)}$','$\Delta e$'}; %,'$\Delta a~\mathrm{(AU)}$'};
 % Nsub=length(dName)+1;
-Nsub=length(dName)+1;
-
-% %% Sub1
-% axes('position',[LeftRetainWidth BottomRetainWidth+(Nsub-1)*Height Width Height]);
-% loglog(1e-2,1e-3,'w');hold all;
-% xlim(xlimSet);ylim([1e-6 1]);
-% xxlim=get(gca,'xlim');yylim=get(gca,'ylim');
-% patch([xxlim(1) xxlim(1) Rmin Rmin],...,
-%     [yylim(1) yylim(2) yylim(2) yylim(1)],...,
-%     'k','facealpha',0.70,'edgecolor','none');
-% plot([Rmin Rmin],yylim,'k-');
-% loglog(Rr,-ftL,'k.-','markersize',markersize,'linewidth',1.5);
-% ylabel('$f_*~\mathrm{(DEG)}$','fontsize',fontsize,'Interpreter','latex');
-% set(gca,'ytick',[1e-5 1e-3 1e-1]);
-% yticklabel=get(gca,'yticklabel');
-% for ic=1:length(yticklabel)
-%     yticklabel{ic}=['-',yticklabel{ic}];
-% end
-% set(gca,'yticklabel',yticklabel);
-% set(gca,'xticklabel',[]);
+Nsub=length(dName);
 
 %% Sub2-4
-for iplot=1:Nsub-1
+for iplot=1:Nsub
     
-    axes('position',[LeftRetainWidth BottomRetainWidth+(Nsub-1-iplot)*Height Width Height]);
+    axes('position',[LeftRetainWidth BottomRetainWidth+(Nsub-iplot)*Height Width Height]);
 
     dx=eval(dName{iplot});
     dx1=eval([dName{iplot},'1']);
@@ -251,34 +232,39 @@ for iplot=1:Nsub-1
     set(get(ax(2),'Ylabel'),'String','$|Rlt~Err|$','fontsize',fontsize,'Interpreter','latex');
     %%% The tick overlap problem
     linkaxes(ax,'x');
-    set(ax(1),'Box','off');
-    set(ax(2),'Box','off');
+%     set(ax(1),'Box','on');
+%     set(ax(2),'Box','off');
     set(ax(2), 'XTickLabel','','XAxisLocation','Top');
-    pos=get(ax(1),'position');
-    annotation('line',[pos(1) pos(1)+pos(3)],[pos(2)+pos(4) pos(2)+pos(4)]);
     %%% xlabel
-    if iplot==Nsub-1
-        xlabel('$\gamma_R$','fontsize',fontsize,'Interpreter','latex');
-    else
-        set(ax,'xticklabel',[]);
+    switch iplot
+        case 1
+            set(ax,'Box','on');
+            set(ax,'xticklabel',[]);
+            
+        case 2
+            set(ax,'Box','off');
+            pos=get(ax(1),'position');
+            annotation('line',[pos(1) pos(1)+pos(3)],[pos(2)+pos(4) pos(2)+pos(4)]);
+
+            xlabel('$\gamma_R$','fontsize',fontsize,'Interpreter','latex');
     end
-    %%% remove head and tail ystick 
+    %%% left 
     yylim=get(ax(1),'ylim');
-    if iplot==Nsub-1
-        set(ax(1),'ytick',10.^(log10(yylim(1)):log10(yylim(2))-1));
-    else
-        set(ax(1),'ytick',10.^(log10(yylim(1))+1:log10(yylim(2))-1));
+    switch iplot
+        case 1
+            set(ax(1),'ytick',10.^(log10(yylim(1))+1:log10(yylim(2))));
+        case 2
+            set(ax(1),'ytick',10.^(log10(yylim(1)):log10(yylim(2))-1));
     end
     yylim=get(ax(2),'ylim');
-    if iplot==Nsub-1
-        set(ax(2),'ylim',[1e-9,1e0]);
-        yylim=get(ax(2),'ylim');
-        set(ax(2),'ytick',10.^(log10(yylim(1)):1:log10(yylim(2))-1));
-%         set(ax(2),'yminortick','on');
-    elseif iplot==1
-        set(ax(2),'ytick',10.^(log10(yylim(1))+1:log10(yylim(2))));
-    else
-        set(ax(2),'ytick',10.^(log10(yylim(1))+1:log10(yylim(2))-1));
+    switch iplot
+        case 1
+            set(ax(2),'ytick',10.^(log10(yylim(1))+1:log10(yylim(2))));
+        case 2
+            set(ax(2),'ylim',[1e-9,1e0]);
+            yylim=get(ax(2),'ylim');
+            set(ax(2),'ytick',10.^(log10(yylim(1)):log10(yylim(2))-1));
+            %         set(ax(2),'yminortick','on');
     end
     set(ax(1),'yticklabelmode','auto');
     set(ax(2),'yticklabelmode','auto');
@@ -298,10 +284,10 @@ for iplot=1:Nsub-1
 %     set(ax(2),'yticklabel',yticklabel2);
 %     box on;
     %% line properties
-    set(h1(1),'linestyle','-','color','b','linewidth',1.5);
-    set(h1(2),'linestyle','none','marker','.','color','r','markersize',markersize);
-    set(h2(1),'linestyle','-','marker','.','color','m','markersize',markersize);
-    set(h2(2),'linestyle','-','marker','.','color','c','markersize',markersize);
+    set(h1(1),'linestyle','-','color','b','linewidth',2.0);
+    set(h1(2),'linestyle','none','marker','.','color','r','markersize',12);
+    set(h2(1),'linestyle','--','color',[1 0.5 0],'linewidth',1.5);
+    set(h2(2),'linestyle','--','color',[0 1 0],'linewidth',1.5);
     if strcmp(dName{iplot},'di')
         legend([h1(1),h1(2)],{'Opik','Gauss'},'fontsize',15,'Interpreter','latex','location','southwest');
     elseif strcmp(dName{iplot},'de')

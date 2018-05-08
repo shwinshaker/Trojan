@@ -13,7 +13,7 @@ titlename={'1999CE119&2004UP10';'2001FU172&2004UP10';'1999CE119&2006RJ103';'2001
 
 % diname='de_record_inout';
 % diname='di_record_inout';
-diname='di_fit_perturb';
+diname='de_fit_perturb';
 % diname='de_fit_perturb';
 
 fontsize=15;

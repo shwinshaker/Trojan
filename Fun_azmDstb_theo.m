@@ -1,7 +1,7 @@
 function [theta,phi,thetap,phip,thetav,phiv,phivpvt,lambda,f,ki,N] = ...,
     Fun_azmDstb_theo(aP,eP,IP,aT,IT)
 
-N=10000;
+N=1000000;
 
 %% free parameter
 % std0=2.2*abs(IP)^0.5;
